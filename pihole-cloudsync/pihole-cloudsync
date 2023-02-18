@@ -131,25 +131,31 @@ push () {
         $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM adlist" >$ad_list
         $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM domainlist" >$domain_list
         $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM adlist_by_group" >$ad_by_group_list
-	$SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM domainlist_by_group" >$domain_by_group_list
+        $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM domainlist_by_group" >$domain_by_group_list
 
-	# Compare local files to remote Git repo
-	$SUDO git remote update > /dev/null
+        # Compare local files to remote Git repo
+        $SUDO git remote update > /dev/null
 
 	# If local files are different than remote, update remote Git repo
         CHANGED=$($SUDO git --work-tree=$personal_git_dir status --porcelain)
         if [ -n "${CHANGED}" ]; then
                 echo 'Local Pi-hole lists are different than remote Git repo. Updating remote repo...';
-		rightnow=$(date +"%B %e, %Y %l:%M%p")
-		# Remove -q option if you don't want to run in "quiet" mode
-		$SUDO git commit -a -m "Updated $rightnow" -q
-		$SUDO git push -q
-		echo 'Done!';
-		exit 0
+                rightnow=$(date +"%B %e, %Y %l:%M%p")
+                # Remove -q option if you don't want to run in "quiet" mode
+                $SUDO git pull -q
+                # Export Ad and Domain lists from Gravity database
+                $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM adlist" >$ad_list
+                $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM domainlist" >$domain_list
+                $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM adlist_by_group" >$ad_by_group_list
+                $SUDO sqlite3 $gravity_db -header -csv "SELECT * FROM domainlist_by_group" >$domain_by_group_list
+                $SUDO git commit -a -m "Updated $rightnow" -q
+                $SUDO git push -q
+                echo 'Done!';
+                exit 0
         else
-	# If local files are the same as remote, do nothing and exit
-	echo 'Remote Git repo matches local Pi-hole lists. No further action required.';
-		exit 0
+                # If local files are the same as remote, do nothing and exit
+                echo 'Remote Git repo matches local Pi-hole lists. No further action required.';
+                exit 0
         fi
 }
 pull () {
@@ -163,7 +169,7 @@ pull () {
                 echo 'Remote Git repo is different than local Pi-hole lists. Updating local lists...';
                 # Remove -q option if you don't want to run in "quiet" mode
                 $SUDO git fetch --all -q
-		$SUDO git reset --hard origin/master -q
+                $SUDO git reset --hard origin/master -q
                 $SUDO service pihole-FTL stop
                 $SUDO cp $custom_list $pihole_dir
                 $SUDO cp $cname_list $dnsmasq_dir
@@ -171,11 +177,11 @@ pull () {
                 $SUDO sqlite3 $gravity_db -header -csv ".import adlist.csv adlist -v"
                 $SUDO sqlite3 $gravity_db "DROP TABLE domainlist;"
                 $SUDO sqlite3 $gravity_db -header -csv ".import domainlist.csv domainlist -v"
-	        $SUDO sqlite3 $gravity_db "DROP TABLE adlist_by_group;"
-	        $SUDO sqlite3 $gravity_db -header -csv ".import adlist_by_group.csv adlist_by_group -v"
-	        $SUDO sqlite3 $gravity_db "DROP TABLE domainlist_by_group;"
-	        $SUDO sqlite3 $gravity_db -header -csv ".import domainlist_by_group.csv domainlist_by_group -v"
-		$SUDO pihole -g
+                $SUDO sqlite3 $gravity_db "DROP TABLE adlist_by_group;"
+                $SUDO sqlite3 $gravity_db -header -csv ".import adlist_by_group.csv adlist_by_group -v"
+                $SUDO sqlite3 $gravity_db "DROP TABLE domainlist_by_group;"
+                $SUDO sqlite3 $gravity_db -header -csv ".import domainlist_by_group.csv domainlist_by_group -v"
+                $SUDO pihole -g
                 echo 'Done!';
                 exit 0
         else

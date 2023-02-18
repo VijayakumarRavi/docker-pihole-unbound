@@ -4,7 +4,7 @@ FROM pihole/pihole:${PIHOLE_VERSION:-latest}
 ARG SOURCE="deb http://deb.debian.org/debian testing main"
 RUN echo $SOURCE > /etc/apt/sources.list
 
-RUN apt update && apt install -y -f unbound
+RUN apt update && apt install -y -f unbound git
 
 RUN mkdir -p /var/log/unbound
 RUN chown -R unbound:unbound /var/log/unbound
@@ -29,7 +29,8 @@ RUN chown -R unbound:unbound /var/lib/unbound/root.hints
 COPY pihole-cloudsync/pihole-cloudsync /usr/local/bin
 RUN chmod +x /usr/local/bin/pihole-cloudsync
 
-RUN git clone https://github.com/VijayakumarRavi/docker-pihole-unbound /etc/pihole/docker-pihole-unbound
+ARG GIT_KEY
+RUN git clone https://${GIT_KEY}@github.com/VijayakumarRavi/docker-pihole-unbound /etc/pihole/docker-pihole-unbound
 
 LABEL org.opencontainers.image.authors="Vijayakumar Ravi" \
       org.opencontainers.image.title="vijaysrv/pihole-unbound" \
