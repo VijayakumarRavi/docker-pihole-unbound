@@ -1,0 +1,2 @@
+id,address,enabled,date_added,date_modified,comment,date_updated,number,invalid_domains,status
+1,https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts,1,1676505603,1676505603,"Migrated from /etc/pihole/adlists.list",1676746015,182113,1,2
