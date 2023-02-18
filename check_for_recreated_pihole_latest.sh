@@ -4,7 +4,7 @@ BASEDIR=$(dirname $0)
 date
 
 pihole_latest_image=pihole/pihole:latest
-pihole_unbound_latest_image=pluim003/pihole-unbound:latest
+pihole_unbound_latest_image=vijaysrv/pihole-unbound:latest
 
 docker pull "${pihole_latest_image}" 
 docker pull "${pihole_unbound_latest_image}" 

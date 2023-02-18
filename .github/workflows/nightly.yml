@@ -4,7 +4,7 @@ on:
   # cron job to trigger the build on any push to dev
   push:
     branches:
-      - 'dev'
+      - 'master'
   #schedule:
   # cron job to trigger the build dialy (time in UTC)
   #  - cron:  '0 4 * * *'
@@ -42,4 +42,4 @@ jobs:
           file: "Dockerfile_nightly"
           platforms: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64,linux/386
           push: true
-          tags: pluim003/pihole-unbound:nightly
+          tags: vijaysrv/pihole-unbound:nightly
