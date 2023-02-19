@@ -1,4 +1,5 @@
 ARG PIHOLE_VERSION
+ARG GIT_KEY
 FROM pihole/pihole:${PIHOLE_VERSION:-latest}
 
 ARG SOURCE="deb http://deb.debian.org/debian testing main"
@@ -29,7 +30,6 @@ RUN chown -R unbound:unbound /var/lib/unbound/root.hints
 COPY pihole-cloudsync/pihole-cloudsync /usr/local/bin
 RUN chmod +x /usr/local/bin/pihole-cloudsync
 
-ARG GIT_KEY
 RUN git clone https://${GIT_KEY}@github.com/VijayakumarRavi/docker-pihole-unbound /etc/pihole/docker-pihole-unbound
 
 LABEL org.opencontainers.image.authors="Vijayakumar Ravi" \
