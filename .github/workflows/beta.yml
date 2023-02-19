@@ -46,7 +46,7 @@ jobs:
           repository: "VijayakumarRavi/docker-pihole-unbound"
           type: "latest"
 
-      - name: git diff and set output
+      - name: compare versions and set output
         id: set_output
         run: |
           if [[${{ steps.pihole_version.outputs.release }} != ${{ steps.pihole_unbound_version.outputs.release }}]]; then
@@ -58,7 +58,7 @@ jobs:
   docker:
     name: Build 🏗 & Publish 🚀
     needs: [Check_version]
-    if: needs.Check_version.outputs.run_build_jobs == 'true'
+    if: needs.Check_version.outputs.run_build_jobs == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
