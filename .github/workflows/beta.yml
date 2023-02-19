@@ -61,6 +61,9 @@ jobs:
     if: needs.Check_version.outputs.run_build_jobs == 'false'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
