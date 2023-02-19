@@ -79,6 +79,7 @@ jobs:
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{ needs.Check_version.outputs.pihole_version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push latest
         uses: docker/build-push-action@v3
