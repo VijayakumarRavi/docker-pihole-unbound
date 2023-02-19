@@ -73,6 +73,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ needs.Check_version.outputs.pihole_version }}
+
       - name: Build and push latest
         uses: docker/build-push-action@v3
         with:
@@ -81,9 +85,5 @@ jobs:
           push: true
           tags: vijaysrv/pihole-unbound:beta,vijaysrv/pihole-unbound:${{ needs.Check_version.outputs.pihole_version }}-beta
 
-      #- uses: rickstaa/action-create-tag@v1
-      #  with:
-      #    tag: ${{ needs.Check_version.outputs.pihole_version }}
-
-      #- name: Creating release
-      #  uses: ncipollo/release-action@v1
+      - name: Creating release
+        uses: ncipollo/release-action@v1
