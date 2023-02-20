@@ -82,7 +82,7 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{ needs.Check_version.outputs.pihole_version }}
-        if: ${{ steps.checkTag.outputs.exists }} == "false"
+        if: ${{ steps.checkTag.outputs.exists == 'false' }}
 
       - name: Build and push latest
         uses: docker/build-push-action@v3
