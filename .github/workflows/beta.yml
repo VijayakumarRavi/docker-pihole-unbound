@@ -73,30 +73,11 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      #- uses: actions/checkout@v3
-      #- uses: mukunku/tag-exists-action@v1.2.0
-      #  id: checkTag
-      #  with:
-      #    tag: "${{ needs.Check_version.outputs.pihole_version }}"
-      #- name: Createing new tag with pihole version
-      #  uses: rickstaa/action-create-tag@v1
-      #  with:
-      #    tag: ${{ needs.Check_version.outputs.pihole_version }}
-      #  if: ${{ steps.checkTag.outputs.exists == 'false' }}
-
       - name: Build and push latest
         uses: docker/build-push-action@v3
         with:
           build-args: ${{ needs.Check_version.outputs.pihole_version }}, ${{ secrets.GITCRED }}
           platforms: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
           push: true
-          tags: vijaysrv/pihole-unbound:beta,vijaysrv/pihole-unbound:${{ needs.Check_version.outputs.pihole_version }}-beta
-
-      - uses: actions/checkout@v3
-      - name: Creating release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ needs.Check_version.outputs.pihole_version }}
-          prerelease: false
-          title: ${{ needs.Check_version.outputs.pihole_version }}
+          file: "Dockerfile_beta"
+          tags: vijaysrv/pihole-unbound:beta
