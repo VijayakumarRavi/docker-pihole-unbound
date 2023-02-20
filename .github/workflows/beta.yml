@@ -3,13 +3,13 @@ name: Build 🏗 & Publish 🚀 latest image
 on:
   # cron job to trigger the build on any push to master
   push:
-    branches:
-      - "master"
-    paths:
-      - "pihole-unbound/VERSION"
+    #branches:
+    #- "master"
+    #    paths:
+    #      - 'pihole-unbound/VERSION'
   schedule:
     # cron job to trigger the build dialy (time in UTC)
-    - cron: "0 0 * * 0"
+    - cron: "0 4 * * *"
   workflow_dispatch:
     inputs:
       logLevel:
@@ -58,7 +58,7 @@ jobs:
   docker:
     name: Buildig 👷‍♂️ latest 🆕 docker 🏗️ image 💾
     needs: [Check_version]
-    if: needs.Check_version.outputs.run_build_jobs == 'true'
+    if: needs.Check_version.outputs.run_build_jobs == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -79,12 +79,5 @@ jobs:
           build-args: ${{ needs.Check_version.outputs.pihole_version }}, ${{ secrets.GITCRED }}
           platforms: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
           push: true
-          tags: vijaysrv/pihole-unbound:latest,vijaysrv/pihole-unbound:${{ needs.Check_version.outputs.pihole_version }}
-
-      - uses: actions/checkout@v3
-      - name: Creating release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ needs.Check_version.outputs.pihole_version }}
-          title: ${{ needs.Check_version.outputs.pihole_version }}
+          file: "Dockerfile_beta"
+          tags: vijaysrv/pihole-unbound:beta
