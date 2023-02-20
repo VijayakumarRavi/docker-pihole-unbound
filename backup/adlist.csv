@@ -1,2 +1,4 @@
 id,address,enabled,date_added,date_modified,comment,date_updated,number,invalid_domains,status
 1,https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts,1,1676871566,1676871566,"Migrated from /etc/pihole/adlists.list",1676871568,183304,1,2
+2,https://blocklistproject.github.io/Lists/everything.txt,1,1676873406,1676873406,"blocklist github",1676873463,1636785,0,1
+3,https://blocklistproject.github.io/Lists/smart-tv.txt,1,1676873445,1676873445,"smart tv",1676873465,72,0,1
