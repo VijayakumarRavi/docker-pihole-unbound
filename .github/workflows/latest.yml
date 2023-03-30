@@ -49,7 +49,7 @@ jobs:
       - name: compare versions and set output
         id: set_output
         run: |
-          if [[${{ steps.pihole_version.outputs.release }} != ${{ steps.pihole_unbound_version.outputs.release }}]]; then
+          if [[ "${{ steps.pihole_version.outputs.release }}" != "${{ steps.pihole_unbound_version.outputs.release }}" ]]; then
             echo "run_jobs=true" >> "$GITHUB_OUTPUT"
           else
             echo "run_jobs=false" >> "$GITHUB_OUTPUT"
