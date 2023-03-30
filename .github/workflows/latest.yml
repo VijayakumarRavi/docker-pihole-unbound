@@ -89,4 +89,5 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: ${{ needs.Check_version.outputs.pihole_version }}
+          prerelease: false
           title: ${{ needs.Check_version.outputs.pihole_version }}
