@@ -54,6 +54,8 @@ jobs:
           else
             echo "run_jobs=false" >> "$GITHUB_OUTPUT"
           fi
+      - name: DEBUG OUTPUT
+        run: echo "${{ steps.set_output.outputs.run_jobs }}"
 
   docker:
     name: Buildig 👷‍♂️ latest 🆕 docker 🏗️ image 💾
