@@ -6,7 +6,7 @@ on:
     branches:
       - "master"
     paths:
-      - "./VERSION"
+      - "VERSION"
   schedule:
     # cron job to trigger the build dialy (time in UTC)
     - cron: "0 0 * * *"
@@ -57,7 +57,8 @@ jobs:
           VERSION=`cat ./VERSION`
           if [[ "${{ steps.pihole_version.outputs.release }}" != "${{ steps.pihole_unbound_version.outputs.release }}" ]]; then
             echo "run_jobs=true" >> "$GITHUB_OUTPUT"
-          elseif [[ "${{ steps.pihole_version.outputs.release }}" != "$VERSION" ]]; then
+          fi
+          if [[ "${{ steps.pihole_version.outputs.release }}" != "$VERSION" ]]; then
             sed -i "1 s/.*/${{ steps.pihole_version.outputs.release }}/" ./VERSION
             git config --global user.name "GitHub Action: auto update pihole"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
