@@ -65,7 +65,7 @@ jobs:
             git add ./VERSION
             if ! git diff-index --quiet HEAD; then
               echo "run_jobs=true" >> "$GITHUB_OUTPUT"
-              git commit -m "🤖 bot(Github): Auto update tailscale to ${{ steps.version.outputs.version }}"
+              git commit -m "🤖 bot(Github): Auto update pihole to ${{ steps.pihole_version.outputs.release }}"
               git push
             fi
           else
