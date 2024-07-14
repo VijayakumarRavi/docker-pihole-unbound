@@ -57,17 +57,6 @@ jobs:
           VERSION=`cat ./VERSION`
           if [[ "${{ steps.pihole_version.outputs.release }}" != "${{ steps.pihole_unbound_version.outputs.release }}" ]]; then
             echo "run_jobs=true" >> "$GITHUB_OUTPUT"
-          fi
-          if [[ "${{ steps.pihole_version.outputs.release }}" != "$VERSION" ]]; then
-            sed -i "1 s/.*/${{ steps.pihole_version.outputs.release }}/" ./VERSION
-            git config --global user.name "GitHub Action: auto update pihole"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git add ./VERSION
-            if ! git diff-index --quiet HEAD; then
-              echo "run_jobs=true" >> "$GITHUB_OUTPUT"
-              git commit -m "🤖 bot(Github): Auto update pihole to ${{ steps.pihole_version.outputs.release }}"
-              git push
-            fi
           else
             echo "run_jobs=false" >> "$GITHUB_OUTPUT"
           fi
@@ -108,3 +97,19 @@ jobs:
           automatic_release_tag: ${{ needs.Check_version.outputs.pihole_version }}
           prerelease: false
           title: ${{ needs.Check_version.outputs.pihole_version }}
+      - name: update versions and set output
+        run: |
+            VERSION=`cat ./VERSION`
+            if [[ "${{ needs.Check_version.outputs.pihole_version }}" != "$VERSION" ]]; then
+              sed -i "1 s/.*/${{ needs.Check_version.outputs.pihole_version }}/" ./VERSION
+              git config --global user.name "GitHub Action: auto update pihole"
+              git config --global user.email "github-actions[bot]@users.noreply.github.com"
+              git add ./VERSION
+              if ! git diff-index --quiet HEAD; then
+                echo "run_jobs=true" >> "$GITHUB_OUTPUT"
+                git commit -m "🤖 bot(Github): Auto update pihole to ${{ needs.Check_version.outputs.pihole_version }}"
+                git push
+              fi
+            else
+              echo "run_jobs=false" >> "$GITHUB_OUTPUT"
+            fi
