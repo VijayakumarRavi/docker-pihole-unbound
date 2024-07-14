@@ -2,8 +2,8 @@ ARG PIHOLE_VERSION
 ARG GIT_KEY
 FROM pihole/pihole:${PIHOLE_VERSION:-latest}
 
-ARG SOURCE="deb http://deb.debian.org/debian testing main"
-RUN echo $SOURCE > /etc/apt/sources.list
+#ARG SOURCE="deb http://deb.debian.org/debian testing main"
+#RUN echo $SOURCE > /etc/apt/sources.list
 
 RUN apt update && apt install -y -f unbound git
 
