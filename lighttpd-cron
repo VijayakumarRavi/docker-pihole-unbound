@@ -1,4 +1,0 @@
-# cronfile for use with Lighttpd
-#
-# logrotate at midnight
-0 0 * * *  root /usr/sbin/logrotate --state /var/lib/logrotate/lighttpd /etc/lighttpd/logrotate -f

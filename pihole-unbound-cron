@@ -1,7 +1,0 @@
-# cronfile for use with Pihole-Unbound
-#
-# logrotate at midnight
-0 0 * * *  root /usr/sbin/logrotate --state /var/lib/logrotate/unbound /etc/unbound/logrotate -f
-
-#Push Master Pi-hole Lists to remote Git repo
-00 01,07,13,19 * * * sudo /usr/local/bin/pihole-cloudsync --push > /dev/null 2>&1

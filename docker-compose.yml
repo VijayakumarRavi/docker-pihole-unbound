@@ -1,10 +1,9 @@
-version: "3.0"
-
+---
+version: '3.0'
 volumes:
   etc_pihole:
   etc_dnsmasq:
   etc_unbound:
-
 services:
   pihole:
     container_name: pihole-unbound
@@ -14,18 +13,18 @@ services:
       - 80:80/tcp
       - 53:53/tcp
       - 53:53/udp
-      # - 5335:5335/tcp # Uncomment to enable unbound access on local server
-      # - 22/tcp # Uncomment to enable SSH
+      # - 5335:5335/tcp  # Uncomment to enable unbound access on local server
+      # - 22/tcp  # Uncomment to enable SSH
     environment:
       FTLCONF_LOCAL_IPV4: 10.0.1.1
       TZ: Asia/Kolkata
       WEBPASSWORD: webpassword
-      REV_SERVER: "true"
+      REV_SERVER: 'true'
       REV_SERVER_TARGET: 10.0.0.1
       REV_SERVER_DOMAIN: local
       REV_SERVER_CIDR: 10.0.0.0/16
-      PIHOLE_DNS_: 127.0.0.1#5335 # Hardcoded to our Unbound server
-      DNSSEC: "true" # Enable DNSSEC
+      PIHOLE_DNS_: 127.0.0.1#5335  # Hardcoded to our Unbound server
+      DNSSEC: 'true'  # Enable DNSSEC
       DNSMASQ_LISTENING: single
     volumes:
       - etc_pihole:/etc/pihole:rw
