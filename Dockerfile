@@ -12,7 +12,20 @@ ARG UNBOUND_GID=102
 RUN groupadd -g ${UNBOUND_GID} unbound \
     && useradd -g unbound -d /var/unbound -u ${UNBOUND_UID} -M -s /bin/false unbound
 
-COPY --from=unbound /usr/sbin/unbound /opt/usr/sbin/unbound
+COPY --from=unbound /lib/ld-musl*.so.1 /lib/
+COPY --from=unbound /usr/lib/libgcc_s.so.1 /usr/lib/
+COPY --from=unbound /lib/libcrypto.so.3 /lib/libssl.so.3 /lib/
+COPY --from=unbound /usr/lib/libsodium.so.* /usr/lib/libevent-2.1.so.* /usr/lib/libexpat.so.* /usr/lib/libhiredis.so.* /usr/lib/libnghttp2.so.* /usr/lib/
+COPY --from=unbound /etc/ssl/ /etc/ssl/
+
+COPY --from=unbound /usr/sbin/ /usr/sbin/
+
+COPY --from=unbound /usr/bin/ /usr/bin/
+
+COPY --from=unbound /usr/bin/drill-hc /usr/bin/drill-hc
+
+COPY --from=unbound --chown=unbound:unbound /var/unbound/root.hints /var/unbound/root.hints
+COPY --from=unbound --chown=unbound:unbound /var/unbound/root.key /var/unbound/root.key
 
 RUN mkdir -p /etc/unbound/
 COPY config/unbound-pihole.conf /etc/unbound/unbound.conf
@@ -25,10 +38,6 @@ COPY config/unbound-run /etc/services.d/unbound/run
 
 COPY config/unbound-package-helper /usr/lib/unbound/package-helper
 RUN chmod 755 /usr/lib/unbound/package-helper
-
-RUN mkdir -p /var/lib/unbound/
-RUN curl https://www.internic.net/domain/named.root -o /var/lib/unbound/root.hints
-RUN chown -R unbound:unbound /var/lib/unbound/root.hints
 
 LABEL org.opencontainers.image.authors="Vijayakumar Ravi" \
       org.opencontainers.image.title="vijaysrv/pihole-unbound" \
