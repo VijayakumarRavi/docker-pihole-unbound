@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clean workflow runs
-        uses: boredland/action-purge-workflow-runs@main
+        uses: boredland/action-purge-workflow-runs@0.0
         with:
           days-old: 14
         env:
