@@ -7,7 +7,7 @@ volumes:
 services:
   pihole:
     container_name: pihole-unbound
-    image: vijaysrv/pihole-unbound:latest
+    image: vijaysrv/pihole-unbound:2024.07.0
     hostname: pihole
     ports:
       - 80:80/tcp
