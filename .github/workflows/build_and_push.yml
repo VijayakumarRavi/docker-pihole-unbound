@@ -4,6 +4,7 @@ on:
   # cron job to trigger the build on any push to master
   push:
     branches: [master]
+    paths: [Dockerfile]
   schedule:
     # cron job to trigger the build dialy (time in UTC)
     - cron: 0 0 * * *
