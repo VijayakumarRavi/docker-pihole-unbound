@@ -1,11 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
-      "matchFileNames": ["Dockerfile"],
-      "updateTypes": ["major", "minor", "patch"],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "Dockerfile"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": true
