@@ -108,7 +108,7 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
-      - uses: softprops/action-gh-release@v2.2.0
+      - uses: softprops/action-gh-release@v2.2.1
         with:
           tag_name: ${{ steps.extract-version.outputs.PIHOLE_VERSION }}
           body: |
