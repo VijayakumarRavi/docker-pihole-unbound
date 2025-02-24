@@ -1,6 +1,6 @@
 FROM ghcr.io/klutchell/unbound:1.22.0 AS unbound
 
-FROM pihole/pihole:2025.02.5
+FROM pihole/pihole:2025.02.6
 LABEL maintainer="Vijayakumar Ravi"
 
 ARG SOURCE="deb http://deb.debian.org/debian testing main"
