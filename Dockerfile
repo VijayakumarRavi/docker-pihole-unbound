@@ -1,4 +1,4 @@
-FROM ghcr.io/klutchell/unbound:1.23.0 AS unbound
+FROM ghcr.io/klutchell/unbound:1.23.1 AS unbound
 
 FROM pihole/pihole:2025.07.1
 LABEL maintainer="Vijayakumar Ravi"
